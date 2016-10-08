@@ -1,66 +1,65 @@
-public class StackedQueue implements Queue {
-    private final ArrayStack leftStack;
-    private final ArrayStack rightStack;
 
-    StackedQueue(int capacity) {
-        this.leftStack = new ArrayStack(capacity);
-        this.rightStack = new ArrayStack(capacity);
-    }
+public class StackedQueue<T> implements Queue<T> {
+	private final ArrayStack<T> leftStack;
+	private final ArrayStack<T> rightStack;
 
-    public void enqueue(int a) throws InvalidOperationException {
-        if (isFull()) {
-            throw new InvalidOperationException("Queue is overfull");
-        } else {
-            this.leftStack.push(a);
-        }
-    }
+	public StackedQueue(int capacity) {
+		this.leftStack = new ArrayStack<T>(capacity);
+		this.rightStack = new ArrayStack<T>(capacity);
+	}
 
-    public int peek() throws InvalidOperationException {
-        if (isEmpty()) {
-            throw new InvalidOperationException("Queue is Empty");
-        } else {
-        if(!this.rightStack.isEmpty()) {
-            return this.rightStack.peek();
-        } else {
-            while (!this.leftStack.isEmpty()) {
-                this.rightStack.push(this.leftStack.peek());
-                this.leftStack.pop();
-            }
+	public void enqueue(T a) throws InvalidOperationException {
+		if (isFull()) {
+			throw new InvalidOperationException("Queue is overfull");
+		} else {
+			this.leftStack.push(a);
+		}
+	}
 
-            return this.rightStack.peek();
-        }
-        }
-    }
+	public T peek() throws InvalidOperationException {
+		if (isEmpty()) {
+			throw new InvalidOperationException("Queue is Empty");
+		} else {
+			if (!this.rightStack.isEmpty()) {
+				return this.rightStack.peek();
+			} else {
+				while (!this.leftStack.isEmpty()) {
+					this.rightStack.push(this.leftStack.peek());
+					this.leftStack.pop();
+				}
 
-    public int dequeue() throws InvalidOperationException {
-        if (isEmpty()) {
-            throw new InvalidOperationException("Queue is Empty");
-        } else {
+				return this.rightStack.peek();
+			}
+		}
+	}
 
-        if(!this.rightStack.isEmpty()) {
-            return this.rightStack.pop();
-        } else {
-            while (!this.leftStack.isEmpty()) {
-                this.rightStack.push(this.leftStack.peek());
-                this.leftStack.pop();
-            }
+	public T dequeue() throws InvalidOperationException {
+		if (isEmpty()) {
+			throw new InvalidOperationException("Queue is Empty");
+		} else {
 
-            return this.rightStack.pop();
-        }
-        }
-    }
+			if (!this.rightStack.isEmpty()) {
+				return this.rightStack.pop();
+			} else {
+				while (!this.leftStack.isEmpty()) {
+					this.rightStack.push(this.leftStack.peek());
+					this.leftStack.pop();
+				}
 
-    public int getSize() {
-        return this.leftStack.getSize() + this.rightStack.getSize();
-    }
+				return this.rightStack.pop();
+			}
+		}
+	}
 
-    public boolean isEmpty() {
-        return this.getSize() == 0;
-    }
+	public int getSize() {
+		return this.leftStack.getSize() + this.rightStack.getSize();
+	}
 
-    public boolean isFull() {
-        return this.leftStack.isFull() || this.rightStack.isFull();
-    }
+	public boolean isEmpty() {
+		return this.getSize() == 0;
+	}
+
+	public boolean isFull() {
+		return this.leftStack.isFull() || this.rightStack.isFull();
+	}
 }
-
-

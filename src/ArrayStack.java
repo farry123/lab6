@@ -1,33 +1,32 @@
-public class ArrayStack implements Stack {
+public class ArrayStack<T> implements Stack<T> {
 
-    private int capacity; // размер массива
-    private int[] stackArray; //сам массив
-    private int top;//индекс вершины
+    private int capacity; // Ń€Đ°Đ·ĐĽĐµŃ€ ĐĽĐ°Ń�Ń�Đ¸Đ˛Đ°
+    private T[] stackArray; //Ń�Đ°ĐĽ ĐĽĐ°Ń�Ń�Đ¸Đ˛
+    private int top;//Đ¸Đ˝Đ´ĐµĐşŃ� Đ˛ĐµŃ€Ń�Đ¸Đ˝Ń‹
 
-    public ArrayStack(int capacity) { //конструктор стэка
+    public ArrayStack(int capacity) { //ĐşĐľĐ˝Ń�Ń‚Ń€Ń�ĐşŃ‚ĐľŃ€ Ń�Ń‚ŃŤĐşĐ°
         this.capacity = capacity;
-        stackArray = new int[capacity];
+        stackArray = (T[]) new Object[capacity];
         top = -1;
     }
 
-    public void push(int a) throws InvalidOperationException {
+    public void push(T a) throws InvalidOperationException {
         if (isFull()) {
             throw new InvalidOperationException("Stack is overfull");
         } else {
-            top++;
-            stackArray[top] = a;//запись в массив
+            stackArray[++top] = a;//Đ·Đ°ĐżĐ¸Ń�ŃŚ Đ˛ ĐĽĐ°Ń�Ń�Đ¸Đ˛
         }
     }
 
-    public int pop() throws InvalidOperationException {
+    public T pop() throws InvalidOperationException {
         if (isEmpty()) {
             throw new InvalidOperationException("Stack is Empty");
         } else {
-            return stackArray[top--];//сначала вернется top,  потом отнимется 1
+            return stackArray[top--];//Ń�Đ˝Đ°Ń‡Đ°Đ»Đ° Đ˛ĐµŃ€Đ˝ĐµŃ‚Ń�ŃŹ top,  ĐżĐľŃ‚ĐľĐĽ ĐľŃ‚Đ˝Đ¸ĐĽĐµŃ‚Ń�ŃŹ 1
         }
     }
 
-    public int peek() throws InvalidOperationException {
+    public T peek() throws InvalidOperationException {
         if (isEmpty()) {
             throw new InvalidOperationException("Stack is Empty");
         } else {
@@ -46,6 +45,5 @@ public class ArrayStack implements Stack {
     public int getSize() {
         int size = top;
         return ++size;
-//        return  capacity;
     }
 }
